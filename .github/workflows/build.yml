@@ -24,7 +24,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Slack Notification
-              uses: rtCamp/action-slack-notify@v2
+              uses: rtCamp/action-slack-notify@v2.3.3
               env:
                 SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
                 SLACK_TITLE: Docker Build Pipeline Triggered
@@ -46,7 +46,7 @@ jobs:
             # Checkout the repository to access the Dockerfile and application code
 
             - name: Checkout application repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             # Setup Docker Buildx for advanced build capabilities
 
@@ -56,7 +56,7 @@ jobs:
             # Login to Docker Hub using credentials stored in GitHub Secrets
 
             - name: Login in Docker Hub
-              uses: docker/login-action@v3
+              uses: docker/login-action@v4
               with:
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -65,7 +65,7 @@ jobs:
 
             - name: Generate Docker Image Tag
               id: tag
-              uses: docker/metadata-action@v5
+              uses: docker/metadata-action@v6
               with:
                 images: docker.io/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
                 tags: |
@@ -74,7 +74,7 @@ jobs:
             # Build the Docker image using the generated tag and pass necessary build arguments for the application
 
             - name: Build Docker Image
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v7
               with:
                 context: .
                 load: true
@@ -106,7 +106,7 @@ jobs:
 
             - name: Upload Scan Report
               if: always()
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                 name: trivy-report
                 path: trivy-report.txt
@@ -115,7 +115,7 @@ jobs:
             # ensuring that only secure images are published.
 
             - name: Push Image to Docker Hub
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v7
               with:
                 context: .
                 push: true
@@ -127,7 +127,7 @@ jobs:
 
             - name: Slack Notification
               if: always()
-              uses: rtCamp/action-slack-notify@v2
+              uses: rtCamp/action-slack-notify@v2.3.3
               env:
                 SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
                 SLACK_COLOR: ${{ job.status }}
