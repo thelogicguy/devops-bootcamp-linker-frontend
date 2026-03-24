@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --dir . --dir app --dir components --dir lib --dir providers --dir utils"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.1.4",
@@ -30,7 +30,7 @@
     "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9.39.2",
+    "eslint": "^9.39.4",
     "eslint-config-next": "^16.1.6",
     "postcss": "^8",
     "tailwindcss": "^4.1.18",
