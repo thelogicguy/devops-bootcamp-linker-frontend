@@ -47,7 +47,7 @@ RUN addgroup --system --gid 1001 nodejs && \
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 
 # Copy the static files from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static/
 
 # Copy the public files from the builder stage
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
